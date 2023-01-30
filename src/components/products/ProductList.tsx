@@ -3,33 +3,28 @@ import ProductItem from './ProductItem';
 import type { Product } from '../../types/product';
 import axios from 'axios';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
-import productsService from '../../store/products/productsService';
+
+import { getProducts } from '../../store/products/productsSlice';
 
 const ProductList = () => {
-  const state = useAppSelector((state) => {
-    //  console.log(state);
-    return state.product;
-  });
+  const dispatch = useAppDispatch();
+  const { products, isLoading } = useAppSelector((state) => state.product);
 
   useEffect(() => {
-    const getProd = async () => {
-      const data = await productsService.getProducts();
-      console.log(data);
-    };
+    dispatch(getProducts());
+  }, [dispatch]);
 
-    getProd();
-  }, []);
-
-  console.log(state);
-  //const [products, setProducts] = useState<Array<Product>>([]);
-
-  // const productList = products?.map((item) => {
-  //   <ProductItem product={item} />;
-  // });
+  console.log(products);
 
   useEffect(() => {}, []);
 
-  return <div className="flex justify-center items-start">{}</div>;
+  return (
+    <div className="mt-5 grid grid-cols-3 gap-4">
+      {products.map((product) => {
+        return <ProductItem product={product} key={product._id} />;
+      })}
+    </div>
+  );
 };
 
 export default ProductList;

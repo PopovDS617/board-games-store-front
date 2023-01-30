@@ -5,7 +5,6 @@ import {
   createSelector,
 } from '@reduxjs/toolkit';
 import productsService from './productsService';
-import { Product } from '../../types/product';
 
 const initialState = {
   products: [],
@@ -19,6 +18,7 @@ export const getProducts = createAsyncThunk(
   '/products/getAll',
   async (_, thunkAPI) => {
     const data = await productsService.getProducts();
+
     return data;
   }
 );

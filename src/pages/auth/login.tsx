@@ -23,16 +23,32 @@ const LoginPage = () => {
       },
     });
 
-    console.log(postData);
     return postData;
   };
 
   return (
-    <form onSubmit={onLogin}>
-      <label htmlFor="email">E-mail</label>
-      <input name="email" type="email" onChange={onLoginCredentials} />
-      <label htmlFor="password">Password</label>
-      <input name="password" type="password" onChange={onLoginCredentials} />
+    <form
+      onSubmit={onLogin}
+      className="flex justify-center items-center flex-col"
+    >
+      <div>
+        <label htmlFor="email">E-mail</label>
+        <input
+          name="email"
+          type="email"
+          onChange={onLoginCredentials}
+          className="m-3"
+        />
+      </div>
+      <div>
+        <label htmlFor="password">Password</label>
+        <input
+          className="m-3 p3"
+          name="password"
+          type="password"
+          onChange={onLoginCredentials}
+        />
+      </div>
       <button>login</button>
     </form>
   );

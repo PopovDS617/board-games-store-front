@@ -3,7 +3,7 @@ import axios from 'axios';
 const getProducts = async () => {
   const data = await axios({
     method: 'GET',
-    url: `${process.env.TEST_SERVER_URI}products`,
+    url: process.env.TEST_SERVER_URI + 'products',
   });
   const result = data.data.products;
   return result;
