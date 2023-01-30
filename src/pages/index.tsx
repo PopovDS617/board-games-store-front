@@ -1,9 +1,14 @@
-export default function Home() {
+import React from 'react';
+import ProductList from '../components/products/ProductList';
+
+const Home = () => {
   return (
     <div className="h-screen">
       <main className="h-full flex justify-center items-center">
-        <h1 className="font-mono text-9xl">Hello there</h1>
+        <ProductList />
       </main>
     </div>
   );
-}
+};
+
+export default Home;
