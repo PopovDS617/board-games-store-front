@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { useState } from 'react';
+import { addNewProduct } from '../../store/admin/adminSlice';
 
 const AddProductPage = () => {
   const [inputData, setInputData] = useState({
@@ -11,6 +12,7 @@ const AddProductPage = () => {
   const dispatch = useAppDispatch();
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(inputData);
     const text = e.target.value;
 
     setInputData((oldState) => {
@@ -21,6 +23,7 @@ const AddProductPage = () => {
   const onAddProductSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log(inputData);
+    dispatch(addNewProduct(inputData));
   };
 
   return (
@@ -43,7 +46,7 @@ const AddProductPage = () => {
         <div className="mt-5 flex flex-col justify-center items-center">
           <label htmlFor="description">Description</label>
           <input
-            name="descritpion"
+            name="description"
             type="text"
             className="border-2 border-solid rounded-md  p-1"
             onChange={onInputChange}
@@ -52,6 +55,7 @@ const AddProductPage = () => {
         <div className="mt-5 flex flex-col justify-center items-center">
           <label htmlFor="price">Price</label>
           <input
+            name="price"
             type="number"
             step={0.1}
             className="border-2 border-solid rounded-md p-1"

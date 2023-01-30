@@ -4,24 +4,47 @@ import type { Product } from '../../types/product';
 import axios from 'axios';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 
-import { getProducts } from '../../store/products/productsSlice';
+import {
+  deleteFromState,
+  getProducts,
+} from '../../store/products/productsSlice';
+import { deleteProduct } from '../../store/admin/adminSlice';
 
 const ProductList = () => {
   const dispatch = useAppDispatch();
-  const { products, isLoading } = useAppSelector((state) => state.product);
+  const { products, isLoading: productLoading } = useAppSelector(
+    (state) => state.product
+  );
+  const {
+    isAdmin,
+    isLoading: adminLoading,
+    isError: adminError,
+  } = useAppSelector((state) => state.admin);
 
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
 
-  console.log(products);
-
-  useEffect(() => {}, []);
+  const deleteHandler = (productId: string) => {
+    dispatch(deleteProduct(productId)).then((result) => {
+      dispatch(getProducts());
+    });
+    // if (!adminError) {
+    //   dispatch(deleteFromState({ productId: productId }));
+    // }
+  };
 
   return (
     <div className="mt-5 grid grid-cols-3 gap-4">
       {products.map((product) => {
-        return <ProductItem product={product} key={product._id} />;
+        return (
+          <ProductItem
+            product={product}
+            key={product._id}
+            isAdmin={isAdmin}
+            onDelete={deleteHandler}
+          />
+        );
       })}
     </div>
   );

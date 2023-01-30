@@ -5,13 +5,28 @@ import type { NewProduct } from '../../types/state';
 const addNewProduct = async (data: NewProduct) => {
   const response = await axios({
     method: 'POST',
-    url: process.env.TEST_SERVER_URI + 'admin/' + 'new',
+    url: process.env.TEST_SERVER_URI + 'admin/' + 'add-product',
     data: data,
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
   });
-  const result = response;
-  return result;
+
+  return response;
+};
+const deleteProduct = async (productId: string) => {
+  const response = await axios({
+    method: 'DELETE',
+    url: process.env.TEST_SERVER_URI + 'admin/' + 'delete-product',
+    data: { productId: productId },
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  });
+
+  return response;
 };
 
-const adminService = { addNewProduct };
+const adminService = { addNewProduct, deleteProduct };
 
 export default adminService;
