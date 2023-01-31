@@ -1,10 +1,13 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { useAppSelector } from '../../store/hooks';
 
 const Navbar = () => {
   const router = useRouter();
   const currentPath = router.pathname;
+  const { name, isAuthorized } = useAppSelector((state) => state.auth);
+  const greeting = 'Welcome, ' + name;
 
   return (
     <nav className=" bg-teal-500 flex justify-between items-center p-5">
@@ -22,6 +25,7 @@ const Navbar = () => {
         </div>
       </div>
       <div className="flex justify-end items-center">
+        {isAuthorized && <h1> {greeting}</h1>}
         <div className="px-5">
           <Link href="/auth/login">
             <a

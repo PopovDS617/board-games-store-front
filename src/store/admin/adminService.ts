@@ -12,7 +12,7 @@ const addNewProduct = async (data: NewProduct) => {
     },
   });
 
-  return response;
+  return response.data;
 };
 const deleteProduct = async (productId: string) => {
   const response = await axios({

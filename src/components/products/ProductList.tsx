@@ -23,7 +23,7 @@ const ProductList = () => {
 
   useEffect(() => {
     dispatch(getProducts());
-  }, [dispatch]);
+  }, []);
 
   const deleteHandler = (productId: string) => {
     dispatch(deleteProduct(productId)).then((result) => {

@@ -16,13 +16,13 @@ const LoginPage = () => {
     e.preventDefault();
     const postData = await axios({
       method: 'POST',
-      url: 'http://localhost:8080/products',
+      url: 'http://localhost:8080/auth/login',
       data: {
         email: credentials.email,
         password: credentials.password,
       },
     });
-
+    console.log(postData);
     return postData;
   };
 
