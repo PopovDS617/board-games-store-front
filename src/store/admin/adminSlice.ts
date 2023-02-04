@@ -5,7 +5,7 @@ import {
   createSelector,
 } from '@reduxjs/toolkit';
 import adminService from './adminService';
-import { NewProduct } from '../../types/state';
+import { NewProduct } from '../../@types/state';
 import { AxiosResponse } from 'axios';
 import { deleteFromState } from '../products/productsSlice';
 
@@ -22,14 +22,14 @@ export const addNewProduct = createAsyncThunk(
   '/admin/addNew',
   async (data: NewProduct, thunkAPI) => {
     const result = await adminService.addNewProduct(data);
-    return result.data.data;
+    return result;
   }
 );
 export const deleteProduct = createAsyncThunk(
   '/admin/delete-product',
   async (productId: string, thunkAPI) => {
     const result = await adminService.deleteProduct(productId);
-    return result.data.data;
+    return result;
   }
 );
 
@@ -45,6 +45,7 @@ const adminSlice = createSlice({
       .addCase(addNewProduct.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
+
         state.result = action.payload;
       })
       .addCase(addNewProduct.rejected, (state, action) => {

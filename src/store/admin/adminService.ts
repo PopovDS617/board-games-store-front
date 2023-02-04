@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { Product } from '../../types/product';
-import type { NewProduct } from '../../types/state';
+import { Product } from '../../@types/product';
+import type { NewProduct } from '../../@types/state';
 
 const addNewProduct = async (data: NewProduct) => {
   const response = await axios({
@@ -24,9 +24,22 @@ const deleteProduct = async (productId: string) => {
     },
   });
 
-  return response;
+  return response.data;
 };
 
-const adminService = { addNewProduct, deleteProduct };
+const updateProduct = async (productId: string, data: NewProduct) => {
+  const response = await axios({
+    method: 'PATCH',
+    url: process.env.TEST_SERVER_URI + 'admin/' + 'update-product',
+
+    data: { ...data, productId },
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  });
+  return response.data;
+};
+
+const adminService = { addNewProduct, deleteProduct, updateProduct };
 
 export default adminService;

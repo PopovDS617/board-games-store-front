@@ -12,7 +12,6 @@ const AddProductPage = () => {
   const dispatch = useAppDispatch();
 
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(inputData);
     const text = e.target.value;
 
     setInputData((oldState) => {
@@ -22,7 +21,7 @@ const AddProductPage = () => {
 
   const onAddProductSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(inputData);
+
     dispatch(addNewProduct(inputData));
   };
 

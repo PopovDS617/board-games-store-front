@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useAppDispatch } from '../../store/hooks';
-import { onSignUp } from '../../store/auth/authSlice';
-import type { Credentials } from '../../types/auth';
+import { signupThunk } from '../../store/auth/authSlice';
+import type { Credentials } from '../../@types/auth';
 
 const SignUpPage = () => {
   const [credentials, setCredentials] = useState<Credentials>({
@@ -23,15 +22,15 @@ const SignUpPage = () => {
     });
   };
 
-  const signUpHandler = (e: React.FormEvent) => {
+  const signupHandler = (e: React.FormEvent) => {
     e.preventDefault();
 
-    dispatch(onSignUp(credentials));
+    dispatch(signupThunk(credentials));
     router.replace('/');
   };
 
   return (
-    <form onSubmit={signUpHandler}>
+    <form onSubmit={signupHandler}>
       <label htmlFor="name">Name</label>
       <input name="name" type="text" onChange={onSignUpCredentials} />
       <label htmlFor="email">E-mail</label>

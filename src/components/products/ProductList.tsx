@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ProductItem from './ProductItem';
-import type { Product } from '../../types/product';
+import type { Product } from '../../@types/product';
 import axios from 'axios';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 
@@ -20,6 +20,7 @@ const ProductList = () => {
     isLoading: adminLoading,
     isError: adminError,
   } = useAppSelector((state) => state.admin);
+  const { isAuthorized } = useAppSelector((state) => state.auth);
 
   useEffect(() => {
     dispatch(getProducts());
@@ -40,9 +41,10 @@ const ProductList = () => {
         return (
           <ProductItem
             product={product}
-            key={product._id}
+            key={Math.random() + 25}
             isAdmin={isAdmin}
-            onDelete={deleteHandler}
+            onDelete={deleteHandler.bind(null, product._id)}
+            isAuthorized={isAuthorized}
           />
         );
       })}

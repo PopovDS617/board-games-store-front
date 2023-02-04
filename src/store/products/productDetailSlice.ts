@@ -8,24 +8,15 @@ import productsService from './productsService';
 import { ParsedUrlQuery } from 'querystring';
 
 const initialState = {
-  products: [],
-  productDetail: {},
+  product: { title: '', _id: '' },
   isError: false,
   isSuccess: false,
   isLoading: false,
   message: 'error',
 };
 
-export const getProducts = createAsyncThunk(
-  '/products/getAll',
-  async (_, thunkAPI) => {
-    const data = await productsService.getProducts();
-
-    return data;
-  }
-);
 export const getSingleProduct = createAsyncThunk(
-  '/products/getOne',
+  '/productDetail/getOne',
   async (productId: string | string[], thunkAPI) => {
     const data = await productsService.getSingleProduct(productId);
 
@@ -33,35 +24,29 @@ export const getSingleProduct = createAsyncThunk(
   }
 );
 
-const productSlice = createSlice({
-  name: 'product',
+const productDetailSlice = createSlice({
+  name: 'productDetail',
   initialState,
-  reducers: {
-    deleteFromState: (state, action) => {
-      const productId = action.payload;
+  reducers: {},
 
-      state.products = state.products.filter(
-        (product) => product.productId !== productId
-      );
-    },
-  },
   extraReducers: (builder) => {
     builder
-      .addCase(getProducts.pending, (state) => {
+
+      .addCase(getSingleProduct.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(getProducts.fulfilled, (state, action) => {
+      .addCase(getSingleProduct.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-
-        state.products = action.payload;
+        state.product = action.payload;
+        console.log(state.product);
       })
-      .addCase(getProducts.rejected, (state, action) => {
+      .addCase(getSingleProduct.rejected, (state, action) => {
         state.isLoading = false;
         state.isSuccess = false;
         //state.message = action.payload;
       });
   },
 });
-export const { deleteFromState } = productSlice.actions;
-export default productSlice.reducer;
+export const productDetailActions = productDetailSlice.actions;
+export default productDetailSlice.reducer;

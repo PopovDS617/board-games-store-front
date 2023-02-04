@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import { useAppDispatch } from '../../store/hooks';
+import { loginThunk } from '../../store/auth/authSlice';
+import { useRouter } from 'next/router';
 
 const LoginPage = () => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
+  const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const onLoginCredentials = (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.target.value;
@@ -14,16 +18,12 @@ const LoginPage = () => {
 
   const onLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const postData = await axios({
-      method: 'POST',
-      url: 'http://localhost:8080/auth/login',
-      data: {
-        email: credentials.email,
-        password: credentials.password,
-      },
-    });
-    console.log(postData);
-    return postData;
+    dispatch(loginThunk(credentials));
+    router.replace('/');
+  };
+
+  const enterTestCredentials = () => {
+    setCredentials({ email: 'test@test.com', password: '11223344' });
   };
 
   return (
@@ -32,8 +32,12 @@ const LoginPage = () => {
       className="flex justify-center items-center flex-col"
     >
       <div>
+        <button type="button" onClick={enterTestCredentials}>
+          enter test credentrials
+        </button>
         <label htmlFor="email">E-mail</label>
         <input
+          value={credentials.email}
           name="email"
           type="email"
           onChange={onLoginCredentials}
@@ -43,6 +47,7 @@ const LoginPage = () => {
       <div>
         <label htmlFor="password">Password</label>
         <input
+          value={credentials.password}
           className="m-3 p3"
           name="password"
           type="password"

@@ -1,21 +1,16 @@
 import React from 'react';
-import type { Product } from '../../types/product';
-import { AppDispatch } from '../../store/store';
-import { ThunkAction } from '@reduxjs/toolkit';
+import type { Product } from '../../@types/product';
+import Link from 'next/link';
 
 const ProductItem = (props: {
   product: Product;
   isAdmin: boolean;
-  onDelete: any;
+  onDelete: () => void;
+  isAuthorized: boolean;
 }) => {
   const { _id, title, price, description, imageUrl } = props.product;
 
-  const dep = () => {
-    console.log('deleted');
-    props.onDelete(_id);
-  };
-
-  const deleteButton = <button onClick={dep}>delete</button>;
+  //const deleteButton = <button onClick={props.onDelete}>delete</button>;
 
   return (
     <div className="flex flex-col justify-start items-startborder-solid border-2 border-black mx-2">
@@ -23,7 +18,9 @@ const ProductItem = (props: {
       <div>image placeholder</div>
       <div className="font-mono">{description}</div>
       <div className="font-bold text-center">$ {price}</div>
-      {props.isAdmin ? deleteButton : null}
+      {/* {props.isAdmin ? deleteButton : null} */}
+      {props.isAuthorized && <button onClick={props.onDelete}>delete</button>}
+      <Link href={'/products/' + _id}>Details</Link>
     </div>
   );
 };
