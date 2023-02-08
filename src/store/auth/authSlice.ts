@@ -6,6 +6,7 @@ import {
 } from '@reduxjs/toolkit';
 import authService from './authService';
 import type { Credentials } from '../../@types/auth';
+import { expiryDate } from '../../utils/date-utils';
 
 const initialState = {
   isAuthorized: false,
@@ -80,6 +81,8 @@ const authSlice = createSlice({
         state.name = action.payload.name;
         state.email = action.payload.email;
         state.token = action.payload.token;
+        localStorage.setItem('token', action.payload.token);
+        localStorage.setItem('tokenExpTime', expiryDate().toString());
       })
       .addCase(loginThunk.rejected, (state, action) => {
         state.isLoading = false;
