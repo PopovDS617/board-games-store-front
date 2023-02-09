@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import ProductItem from './ProductItem';
-import type { Product } from '../../@types/product';
-import axios from 'axios';
+
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
 
-import {
-  deleteFromState,
-  getProducts,
-} from '../../store/products/productsSlice';
+import { getProducts } from '../../store/products/productsSlice';
 import { deleteProduct } from '../../store/admin/adminSlice';
 
 const ProductList = () => {

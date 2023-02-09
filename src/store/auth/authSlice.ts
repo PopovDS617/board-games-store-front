@@ -74,6 +74,7 @@ const authSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(loginThunk.fulfilled, (state, action) => {
+        console.log(action.payload);
         state.isAuthorized = true;
         state.isLoading = false;
         state.isSuccess = true;
@@ -93,6 +94,7 @@ const authSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(logoutThunk.fulfilled, (state, action) => {
+        localStorage.removeItem('token');
         state.isAuthorized = false;
         state.isLoading = false;
         state.isSuccess = true;

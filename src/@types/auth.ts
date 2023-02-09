@@ -3,3 +3,8 @@ export type Credentials = {
   name?: string;
   password: string;
 };
+
+export type RequestWithToken = {
+  productId: string;
+  token?: string;
+};

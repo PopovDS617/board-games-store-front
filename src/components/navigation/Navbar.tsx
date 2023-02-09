@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
@@ -16,6 +16,19 @@ const Navbar = () => {
   const logoutHandler = (userId: string) => {
     dispatch(logoutThunk(userId));
   };
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem('token');
+  //   const expTime = +localStorage.getItem('tokenExpTime');
+  //   if (!token || !expTime) {
+  //     return;
+  //   }
+  //   const currentTime = new Date().getTime();
+  //   const isTokenValid = expTime < currentTime ? false : true;
+  //   if (!isTokenValid) {
+  //     dispatch(logoutThunk(userId));
+  //   }
+  // }, []);
 
   return (
     <nav className=" bg-teal-500 flex justify-between items-center p-5">

@@ -15,18 +15,21 @@ const addNewProduct = async (data: NewProduct) => {
   return response.data;
 };
 const deleteProduct = async (productId: string) => {
-  const token = localStorage.getItem('token');
-  const response = await axios({
-    method: 'DELETE',
-    url: process.env.TEST_SERVER_URI + 'admin/' + 'delete-product',
-    data: { productId: productId },
-    headers: {
-      'Content-type': 'application/json; charset=UTF-8',
-      Authorization: 'Bearer ' + token,
-    },
-  });
+  try {
+    const token = localStorage.getItem('token');
 
-  return response.data;
+    const response = await axios({
+      method: 'DELETE',
+      url: process.env.TEST_SERVER_URI + 'admin/' + 'delete-product',
+      data: { productId: productId },
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+        Authorization: 'Bearer ' + token,
+      },
+    });
+
+    return response.data;
+  } catch (err) {}
 };
 
 const updateProduct = async (productId: string, data: NewProduct) => {

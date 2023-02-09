@@ -3,11 +3,13 @@ import {
   createAsyncThunk,
   PayloadAction,
   createSelector,
+  AsyncThunkAction,
+  AsyncThunkPayloadCreator,
+  isRejectedWithValue,
 } from '@reduxjs/toolkit';
 import adminService from './adminService';
 import { NewProduct } from '../../@types/state';
 import { AxiosResponse } from 'axios';
-import { deleteFromState } from '../products/productsSlice';
 
 const initialState = {
   isAdmin: true,
@@ -28,8 +30,12 @@ export const addNewProduct = createAsyncThunk(
 export const deleteProduct = createAsyncThunk(
   '/admin/delete-product',
   async (productId: string, thunkAPI) => {
-    const result = await adminService.deleteProduct(productId);
-    return result;
+    try {
+      const result = await adminService.deleteProduct(productId);
+      return result;
+    } catch (error) {
+      return isRejectedWithValue(error);
+    }
   }
 );
 
@@ -61,7 +67,7 @@ const adminSlice = createSlice({
         state.result = action.payload;
       })
       .addCase(deleteProduct.rejected, (state, action) => {
-        state.error = action.error.message;
+        console.log(action.error);
       });
   },
 });
